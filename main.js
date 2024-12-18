@@ -18,6 +18,7 @@ document.getElementById('addTaskBtn').addEventListener('click', () => {
         attachDragEvents(task);
 
         document.getElementById(columnId).appendChild(task);
+        saveTasks();
         document.getElementById('taskModal').style.display = 'none';
         document.getElementById('taskInput').value = '';
         document.getElementById('taskDesc').value = '';
@@ -35,9 +36,10 @@ document.querySelector('.reset').addEventListener('click', () => {
     columns.forEach(column => {
         const tasks = column.querySelectorAll('.kanban-task');
         tasks.forEach(task => {
-            task.remove(); 
+            task.remove();
         });
     });
+    saveTasks();
 });
 
 document.querySelector('.addTask').addEventListener('click', () => {
@@ -69,3 +71,39 @@ columns.forEach(column => {
     }
   });
 });
+
+function saveTasks() {
+    const columns = document.querySelectorAll('.kanban-column');
+    const tasksData = {};
+    columns.forEach(column => {
+        const tasks = column.querySelectorAll('.kanban-task');
+        tasksData[column.id] = Array.from(tasks).map(task => ({
+            name: task.textContent,
+            description: task.dataset.description || '',
+        }));
+    });
+    localStorage.setItem('kanbanTasks', JSON.stringify(tasksData));
+}
+
+function loadTasks() {
+    const tasksData = JSON.parse(localStorage.getItem('kanbanTasks'));
+    if (tasksData) {
+        const columns = document.querySelectorAll('.kanban-column');
+        columns.forEach(column => {
+            const columnTasks = tasksData[column.id];
+            if (columnTasks) {
+                columnTasks.forEach(taskData => {
+                    const task = document.createElement('div');
+                    task.className = 'kanban-task';
+                    task.textContent = taskData.name;
+                    task.setAttribute('draggable', 'true');
+                    task.dataset.description = taskData.description;
+                    attachDragEvents(task);
+                    column.appendChild(task);
+                });
+            }
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadTasks);
