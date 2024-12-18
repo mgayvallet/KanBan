@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Kanban Board</h1>
+    <div class="divBtn">
+      <button class="reset">Reinistialiser</button>
+      <button class="addTask">Ajouter une tâche</button>
+    </div>
+  </header>
+  <div id="taskModal" class="modal">
+    <div class="modal-content">
+      <h3>Créer une Nouvelle Tâche</h3>
+      <input type="text" id="taskInput" placeholder="Nom de la tâche" />
+      <input type="text" id="taskDesc" placeholder="Description de la tâche" maxlength="600"/>
+      <select id="taskColumn">
+        <option value="todo">À faire</option>
+        <option value="in-progress">En cours</option>
+        <option value="check">À vérifier</option>
+        <option value="done">Terminé</option>
+      </select>
+      <div class="modal-actions">
+        <button id="addTaskBtn">Ajouter</button>
+        <button id="closeModalBtn">Annuler</button>
+      </div>
+    </div>
+  </div>  
+
+  <div class="DescriptionTask">
+    <div class="DescriptionTaskContent">
+      <div class="headDescriptionTask">
+        <h2 class="h2DescriptionTask">Name</h2>
+        <button class="retour">Retour</button>
+      </div>
+      <hr class="hrDescriptionTask">
+      <p class="descDescriptionTask">DESC</p>
+    </div>
+  </div>
+  <div class="kanban-board">
+    <div class="kanban-column" id="todo">
+      <h2>À faire</h2>
+    </div>
+    <div class="kanban-column" id="in-progress">
+      <h2>En cours</h2>
+    </div>
+    <div class="kanban-column" id="check">
+      <h2>A verifier</h2>
+    </div>
+    <div class="kanban-column" id="done">
+      <h2>Terminé</h2>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
